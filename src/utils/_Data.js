@@ -1,3 +1,5 @@
+import {formatQuestion} from './api.js'
+
 let users = {
     sarahedo: {
         id: 'sarahedo',

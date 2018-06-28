@@ -1,5 +1,3 @@
-import {formatQuestion} from './api.js'
-
 let users = {
     sarahedo: {
         id: 'sarahedo',
@@ -117,6 +115,10 @@ let questions = {
     },
 }
 
+function generateUID () {
+    return Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15)
+}
+
 export function _getUsers () {
     return new Promise((res, rej) => {
         setTimeout(() => res({...users}), 1000)
@@ -127,6 +129,22 @@ export function _getQuestions () {
     return new Promise((res, rej) => {
         setTimeout(() => res({...questions}), 1000)
     })
+}
+
+function formatQuestion ({ optionOneText, optionTwoText, author }) {
+    return {
+        id: generateUID(),
+        timestamp: Date.now(),
+        author,
+        optionOne: {
+            votes: [],
+            text: optionOneText,
+        },
+        optionTwo: {
+            votes: [],
+            text: optionTwoText,
+        }
+    }
 }
 
 export function _saveQuestion (question) {

@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 
 import { handleInitialData } from '../actions/shared'
 import ListPoles from './ListPoles'
+import PoleVoting from './PoleVoting'
 
 class App extends Component {
 
@@ -14,6 +15,7 @@ class App extends Component {
     return (
       <div className="App">
         <ListPoles/>
+        <PoleVoting/>
       </div>
     );
   }

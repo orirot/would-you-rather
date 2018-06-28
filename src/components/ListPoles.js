@@ -3,21 +3,39 @@ import { connect } from 'react-redux'
 import PoleSummary from "./PoleSummary";
 
 class ListPoles extends Component{
+
+    state = {
+        showAnsweredPoles: false
+    }
+
+    toggleShowAnswered =() => {
+        this.setState({
+            showAnsweredPoles: !this.state.showAnsweredPoles
+        })
+    }
+
     render(){
+        const { showAnsweredPoles } = this.state
+        const listToShow = {
+            questionsToShow: showAnsweredPoles ? this.props.answeredQuestions : this.props.notAnsweredQuestions
+        }
         return (
             <div>
-                <h3 className="center">Not Answered Poles</h3>
-                <ul>
-                    {this.props.notAnsweredQuestions.map((q)=>(
-                        <li key={q.id}>
-                            <PoleSummary id={q.id}/>
-                        </li>
-                    ))}
-                </ul>
+                <div className="center">
+                    <button class="btn" onClick={() =>this.toggleShowAnswered()}
+                            style={{opacity: showAnsweredPoles ? 1 : 0.2}}
+                            disabled={showAnsweredPoles}>
+                        "Answered Poles"
+                    </button>
+                    <button class="btn" onClick={() =>this.toggleShowAnswered()}
+                            style={{opacity: !showAnsweredPoles ? 1 : 0.2}}
+                            disabled={!showAnsweredPoles}>
+                        "Not Answered Poles"
+                    </button>
+                </div>
 
-                <h3 className="center">Answered Poles</h3>
                 <ul>
-                    {this.props.answeredQuestions.map((q)=>(
+                    {listToShow.questionsToShow.map((q)=>(
                         <li key={q.id}>
                             <PoleSummary id={q.id}/>
                         </li>
@@ -30,7 +48,7 @@ class ListPoles extends Component{
 
 function didUserVoteToQuestion (userId, question){
     return (didUserVoteToOption(userId, question.optionOne)
-    || didUserVoteToOption(userId, question.optionTwo))
+        || didUserVoteToOption(userId, question.optionTwo))
 }
 
 function didUserVoteToOption (userId, option){

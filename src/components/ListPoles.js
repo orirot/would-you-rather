@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
 import PoleSummary from "./PoleSummary";
-
+import { didUserVoteToQuestion }from '../utils/helpers'
 class ListPoles extends Component{
 
     state = {
@@ -46,18 +46,7 @@ class ListPoles extends Component{
     }
 }
 
-function didUserVoteToQuestion (userId, question){
-    return (didUserVoteToOption(userId, question.optionOne)
-        || didUserVoteToOption(userId, question.optionTwo))
-}
 
-function didUserVoteToOption (userId, option){
-    const votes = option.votes
-    if (votes.includes(userId)){
-        return true;
-    }
-    return false;
-}
 
 function mapStaeToProps({authedUser, questions}){
     const questionsArray = Object.values(questions)

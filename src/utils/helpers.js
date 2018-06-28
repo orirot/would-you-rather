@@ -19,3 +19,16 @@ export function formatQuestion (question, author, authedUser) {
         optionTwoVotes: optionTwo.votes.length,
     }
 }
+
+export function didUserVoteToQuestion (userId, question){
+    return (didUserVoteToOption(userId, question.optionOne)
+        || didUserVoteToOption(userId, question.optionTwo))
+}
+
+export function didUserVoteToOption (userId, option){
+    const votes = option.votes
+    if (votes.includes(userId)){
+        return true;
+    }
+    return false;
+}

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux'
 
 import { handleInitialData } from '../actions/shared'
-import PoleSummary from './PoleSummary'
+import ListPoles from './ListPoles'
 
 class App extends Component {
 
@@ -13,7 +13,7 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <PoleSummary/>
+        <ListPoles/>
       </div>
     );
   }

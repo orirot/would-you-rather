@@ -17,6 +17,8 @@ export function formatQuestion (question, author, authedUser) {
         optionTwoText: optionTwo.text,
         optionOneVotes: optionOne.votes.length,
         optionTwoVotes: optionTwo.votes.length,
+        optionOne,
+        optionTwo
     }
 }
 

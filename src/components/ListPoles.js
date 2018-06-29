@@ -22,12 +22,12 @@ class ListPoles extends Component{
         return (
             <div>
                 <div className="center">
-                    <button class="btn" onClick={() =>this.toggleShowAnswered()}
+                    <button className="btn" onClick={() =>this.toggleShowAnswered()}
                             style={{opacity: showAnsweredPoles ? 1 : 0.2}}
                             disabled={showAnsweredPoles}>
                         "Answered Poles"
                     </button>
-                    <button class="btn" onClick={() =>this.toggleShowAnswered()}
+                    <button className="btn" onClick={() =>this.toggleShowAnswered()}
                             style={{opacity: !showAnsweredPoles ? 1 : 0.2}}
                             disabled={!showAnsweredPoles}>
                         "Not Answered Poles"

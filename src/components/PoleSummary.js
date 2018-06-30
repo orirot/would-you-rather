@@ -5,12 +5,12 @@ import {formatQuestion, formatDate} from "../utils/helpers";
 class PoleSummary extends Component {
 
     render() {
-        const { question } = this.props
+        const { formattedQuestion } = this.props
 
-        if (question === null) {
+        if (formattedQuestion === null) {
             return <p>This Question doesn't exist</p>
         }
-        const {authorName, avatar, timestamp, id,optionOneText, optionTwoText, optionOneVotes, optionTwoVotes} = question
+        const {authorName, avatar, timestamp, optionOneText, optionTwoText, optionOneVotes, optionTwoVotes} = formattedQuestion
         return (
             <div className='pole-summary'>
                 <img
@@ -39,7 +39,7 @@ function mapStateToProps ({authedUser, users, questions}, { id }) {
     const question = questions[id]
     return {
         authedUser,
-        question: question
+        formattedQuestion: question
             ? formatQuestion(question, users[question.author], authedUser)
             : null
     }

@@ -25,12 +25,12 @@ class PoleVoting extends Component {
 
 
     render() {
-        const { question, authedUser, didUserAnswer, didUserPressVote } = this.props
-        if (question === null) {
+        const { question, formattedQuestion, authedUser, didUserAnswer, didUserPressVote } = this.props
+        if (!question) {
             return <p>This Question doesn't exist</p>
         }
 
-        const {authorName, avatar, timestamp, id,optionOneText, optionTwoText, optionOneVotes, optionTwoVotes} = question
+        const {authorName, avatar, timestamp, id,optionOneText, optionTwoText, optionOneVotes, optionTwoVotes} = formattedQuestion
 
 
         return (
@@ -70,7 +70,8 @@ function mapStateToProps ({authedUser, users, questions}) {
         console.log(users[question.author],"*******users[question.author]")}
     return {
         authedUser,
-        question: question
+        question,
+        formattedQuestion: question
             ? formatQuestion(question, users[question.author], authedUser)
             : null,
         didUserAnswer: question ? didUserVoteToQuestion(authedUser, question)

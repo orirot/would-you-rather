@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
+import LoadingBar from 'react-redux-loading'
 
 import { handleInitialData } from '../actions/shared'
 import ListPoles from './ListPoles'
@@ -14,6 +15,7 @@ class App extends Component {
   render() {
     return (
       <div className="App">
+          <LoadingBar />
         <ListPoles/>
         <PoleVoting/>
       </div>

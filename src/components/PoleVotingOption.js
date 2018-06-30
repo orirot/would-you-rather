@@ -7,40 +7,34 @@ import {handleSaveVoteForQuestion} from "../actions/questions";
 
 class PoleVotingOption extends Component {
 
-    addVoteToQuestion= (question, chosenOption) => {
-        const _votes = question[chosenOption].votes.concat(this.props.authedUser)
-        const _option = { ...(question[chosenOption]), votes:_votes}
-        return {
-            ...question, [chosenOption]:_option
-        }
-    }
-
-    handleVote = (option) => {
-        const _question = this.addVoteToQuestion(this.props.question, option)
-        this.props.dispatch(handleSaveVoteForQuestion({
-            question: _question,
-            authedUser: this.props.authedUser
-        }))
+    dispatchHandleSaveVoteForQuestion = () => {
+        this.props.dispatch (handleSaveVoteForQuestion(
+            this.props.question,
+            this.props.optionName,
+            this.props.authedUser))
     }
 
 
     render() {
-        const { question, formattedQuestion, authedUser, didUserAnswer, didUserPressVote } = this.props
+        const { question, formattedQuestion, optionName, authedUser, didUserAnswer, didUserPressVote } = this.props
         if (!question) {
             return <p>This Question doesn't exist</p>
         }
 
         const {authorName, avatar, timestamp, id,optionOneText, optionTwoText, optionOneVotes, optionTwoVotes} = formattedQuestion
 
-        const option = question[this.props.optionName]
+        const option = question[optionName]
         return (
+
             <div className='center'>
+                {console.log({didUserPressVote,didUserAnswer}) || (
                 <div>
+                    {(!didUserPressVote && !didUserAnswer) && (
                     <button className="pole-vote-option-button"
-                            disabled={didUserPressVote || didUserAnswer}
-                            onClick={() =>this.handleVote(this.props.optionName)}>Vote</button>
+                            onClick={() =>this.dispatchHandleSaveVoteForQuestion()}>Vote</button>
+                    )}
                     <h2 className="pole-vote-option">{option.text}</h2>
-                </div>
+                </div>)}
             </div>
         )
     }

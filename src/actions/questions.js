@@ -1,3 +1,5 @@
+import { showLoading, hideLoading } from 'react-redux-loading'
+
 import {_saveQuestion} from "../utils/_Data";
 // import {VOTED} from "../components/PoleVoting" //TODO
 
@@ -13,20 +15,28 @@ export function receiveQuestions (questions){
     }
 }
 
-export function handleSaveVoteForQuestion (info){
+export function handleSaveVoteForQuestion (question, option, authedUser){
+    const votedQuestion = addVoteToQuestion(question, option, authedUser)
     return (dispatch) => {
-        dispatch (pressedVoteForQuestion(info))
-        return _saveQuestion(info.question)
-            .then(dispatch(saveVoteForQuestion(info)))
+        dispatch (pressedVoteForQuestion(question, authedUser))
+        dispatch(showLoading())
+        return _saveQuestion(votedQuestion)
+            .then((question, authedUser) => {
+                dispatch(saveVoteForQuestion({votedQuestion, authedUser}))
+            })
+
             .catch((e) => {
                 console.warn('Error in handleSaveVoteForQuestion: ', e)
-                dispatch(disablePressVoteForQuestion(info))
+                dispatch(disablePressVoteForQuestion(question, authedUser))
                 alert('Error in Saving the vote in the server. Try again.')
+            }).finally(() => {
+                dispatch(hideLoading())
             })
+
     }
 }
 
-function pressedVoteForQuestion ({question, authedUser}){
+function pressedVoteForQuestion (question, authedUser){
     question.voted = true //TODO: hardcoded
     return {
         type: PRESSED_VOTE_FOR_QUESTION,
@@ -35,7 +45,7 @@ function pressedVoteForQuestion ({question, authedUser}){
     }
 }
 
-function disablePressVoteForQuestion ({question, authedUser}){
+function disablePressVoteForQuestion (question, authedUser){
     question.voted = false //TODO: hardcoded
     return {
         type: DISABLE_PRESS_VOTE_FOR_QUESTION,
@@ -52,7 +62,22 @@ function saveVoteForQuestion ({question, authedUser}){
     }
 }
 
+//return a question with the new vote inside
+const addVoteToQuestion= (question, chosenOptionName, authedUser) => {
+    const _votes = question[chosenOptionName].votes.concat(authedUser)
+    const _option = { ...(question[chosenOptionName]), votes:_votes}
+    return {
+        ...question, [chosenOptionName]:_option
+    }
+}
 
+// handleVote = (question, option, authedUser) => {
+//     const _question = addVoteToQuestion(question, option)
+//     this.props.dispatch(handleSaveVoteForQuestion({
+//         question: _question,
+//         authedUser: authedUser
+//     }))
+// }
 
 // export function handleSaveVote(){
 //

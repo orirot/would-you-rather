@@ -1,6 +1,8 @@
 import { showLoading, hideLoading } from 'react-redux-loading'
 
-import {_saveQuestion} from "../utils/_Data";
+import { _saveQuestionAnswer } from "../utils/_Data";
+import {updateUser} from "./users";
+import authedUser from "../reducers/authedUser";
 // import {VOTED} from "../components/PoleVoting" //TODO
 
 export const RECEIVE_QUESTIONS = 'RECEIVE_QUESTIONS'
@@ -15,14 +17,18 @@ export function receiveQuestions (questions){
     }
 }
 
-export function handleSaveVoteForQuestion (question, option, authedUser){
-    const votedQuestion = addVoteToQuestion(question, option, authedUser)
-    return (dispatch) => {
+export function handleSaveVoteForQuestion (question, answer, authedUser){
+    const qid = question.id
+    return (dispatch, getState) => {
         dispatch (pressedVoteForQuestion(question, authedUser))
         dispatch(showLoading())
-        return _saveQuestion(votedQuestion)
-            .then((question, authedUser) => {
-                dispatch(saveVoteForQuestion({votedQuestion, authedUser}))
+        return _saveQuestionAnswer({authedUser, qid, answer})
+            .then(() => {
+                const { users } = getState()
+                const _user = addVoteToUser(users, authedUser, qid, answer)
+                const _question = addVoteToQuestion(question, answer, authedUser)
+                dispatch(updateUser(_user))
+                dispatch(saveVoteForQuestion({_question, authedUser}))
             })
 
             .catch((e) => {
@@ -68,6 +74,16 @@ const addVoteToQuestion= (question, chosenOptionName, authedUser) => {
     const _option = { ...(question[chosenOptionName]), votes:_votes}
     return {
         ...question, [chosenOptionName]:_option
+    }
+}
+
+const addVoteToUser = (users, authedUser, qid, answer) => {
+    return {
+        ...users[authedUser],
+        answers: {
+            ...users[authedUser].answers,
+            [qid]: answer
+        }
     }
 }
 

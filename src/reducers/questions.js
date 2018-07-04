@@ -1,4 +1,5 @@
 import { RECEIVE_QUESTIONS, SAVE_VOTE_FOR_QUESTION, PRESSED_VOTE_FOR_QUESTION, DISABLE_PRESS_VOTE_FOR_QUESTION } from "../actions/questions";
+import authedUser from "./authedUser";
 
 export default function questions (state = {}, action) {
     switch(action.type) {
@@ -10,7 +11,7 @@ export default function questions (state = {}, action) {
         case SAVE_VOTE_FOR_QUESTION:
             return {
                 ...state,
-                    [action.question.id]:action.question
+                    [action.question.id]:action.question,
             }
         case PRESSED_VOTE_FOR_QUESTION:
         case DISABLE_PRESS_VOTE_FOR_QUESTION:

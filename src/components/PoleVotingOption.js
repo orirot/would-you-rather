@@ -14,8 +14,11 @@ class PoleVotingOption extends Component {
             this.props.authedUser))
     }
 
+    didUserVoteForThisOption = () => {
+        return this.props.question[this.props.optionName].votes.includes("tylermcginnis")
+    }
+
      optionPercentage = () =>{
-        debugger
         const numThisOptionVoted = this.props.question[this.props.optionName].votes.length
         const  totalVotes = this.props.question["optionOne"].votes.length + this.props.question["optionTwo"].votes.length
         return(numThisOptionVoted / totalVotes)
@@ -37,9 +40,9 @@ class PoleVotingOption extends Component {
                     <button className="pole-vote-option-button"
                             onClick={() =>this.dispatchHandleSaveVoteForQuestion()}>Vote</button>
                     )}
-                   {/* {didUserAnswer && (
+                    {this.didUserVoteForThisOption() && (
                         <div>You voted for: </div>
-                    )}//TODO: add was this option voted by the authed user */}
+                    )}
                     <h2 className="pole-vote-option">{option.text}</h2>
                     {didUserAnswer && (
                         <div>{this.optionPercentage()}% voted for that option</div>

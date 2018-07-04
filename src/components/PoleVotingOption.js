@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import {formatQuestion, didUserVoteToQuestion, didUserVoteToOption} from "../utils/helpers";
+import { didUserVoteToQuestion, didUserVoteToOption} from "../utils/helpers";
 import {handleSaveVoteForQuestion} from "../actions/questions";
 import PoleSummary from './PoleSummary'
 
@@ -16,12 +16,10 @@ class PoleVotingOption extends Component {
     }
 
     render() {
-        const { question, formattedQuestion, optionName, authedUser, didUserAnswer, didUserPressVote } = this.props
+        const { question, optionName, authedUser, didUserAnswer, didUserPressVote } = this.props
         if (!question) {
             return <p>This Question doesn't exist</p>
         }
-
-        const {authorName, avatar, timestamp, id,optionOneText, optionTwoText, optionOneVotes, optionTwoVotes} = formattedQuestion
 
         const option = question[optionName]
         return (
@@ -46,14 +44,12 @@ class PoleVotingOption extends Component {
 }
 
 //TODO: add question id to mapStateToProps
-function mapStateToProps ({authedUser, users}, {optionName, question}) {
+function mapStateToProps ({authedUser}, {optionName, question}) {
     return {
         optionName,
         authedUser,
         question,
-        formattedQuestion: question
-            ? formatQuestion(question, users[question.author], authedUser)
-            : null,
+
         didUserAnswer: question ? didUserVoteToQuestion(authedUser, question)
             : false,
         didUserPressVote: question ? question.voted : false

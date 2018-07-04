@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import {formatQuestion, didUserVoteToQuestion, didUserVoteToOption} from "../utils/helpers";
 import {handleSaveVoteForQuestion} from "../actions/questions";
+import PoleSummary from './PoleSummary'
 
 //export const VOTED = 'voted' //TODO
 
@@ -13,12 +14,7 @@ class PoleVotingOption extends Component {
             this.props.optionName,
             this.props.authedUser))
     }
-    
-     optionPercentage = () =>{
-        const numThisOptionVoted = this.props.question[this.props.optionName].votes.length
-        const  totalVotes = this.props.question["optionOne"].votes.length + this.props.question["optionTwo"].votes.length
-        return(numThisOptionVoted / totalVotes)
-    }
+
     render() {
         const { question, formattedQuestion, optionName, authedUser, didUserAnswer, didUserPressVote } = this.props
         if (!question) {
@@ -41,7 +37,7 @@ class PoleVotingOption extends Component {
                     )}
                     <h2 className="pole-vote-option">{option.text}</h2>
                     {didUserAnswer && (
-                        <div>{this.optionPercentage()}% voted for that option</div>
+                        <div><PoleSummary id={question.id} wasAnsweredByUser={didUserAnswer}/></div>
                     )}
                 </div>
             </div>

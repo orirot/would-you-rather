@@ -4,8 +4,14 @@ import {formatQuestion, formatDate} from "../utils/helpers";
 
 class PoleSummary extends Component {
 
+    optionPercentage = (optionName) =>{
+        const numThisOptionVoted = this.props.question[optionName].votes.length
+        const  totalVotes = this.props.question["optionOne"].votes.length + this.props.question["optionTwo"].votes.length
+        return(numThisOptionVoted / totalVotes)
+    }
+
     render() {
-        const { formattedQuestion } = this.props
+        const { formattedQuestion , wasAnsweredByUser} = this.props
 
         if (formattedQuestion === null) {
             return <p>This Question doesn't exist</p>
@@ -25,9 +31,15 @@ class PoleSummary extends Component {
                     </div>
                     <div>
                         <span>{optionOneText}: {optionOneVotes}</span>
+                        {wasAnsweredByUser && (
+                            <div>%{this.optionPercentage("optionOne")}</div>
+                        )}
                     </div>
                     <div>
                         <span>{optionTwoText}: {optionTwoVotes}</span>
+                        {wasAnsweredByUser && (
+                            <div>%{this.optionPercentage("optionTwo")}</div>
+                        )}
                     </div>
                 </div>
             </div>
@@ -35,13 +47,15 @@ class PoleSummary extends Component {
     }
 }
 
-function mapStateToProps ({authedUser, users, questions}, { id }) {
+function mapStateToProps ({authedUser, users, questions}, { id, wasAnsweredByUser }) {
     const question = questions[id]
     return {
         authedUser,
         formattedQuestion: question
             ? formatQuestion(question, users[question.author], authedUser)
-            : null
+            : null,
+        wasAnsweredByUser,
+        question
     }
 }
 

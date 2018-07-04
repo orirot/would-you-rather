@@ -37,7 +37,7 @@ class ListPoles extends Component{
                 <ul>
                     {listToShow.questionsToShow.map((q)=>(
                         <li key={q.id}>
-                            <PoleSummary id={q.id}/>
+                            <PoleSummary id={q.id} wasAnsweredByUser={showAnsweredPoles}/>
                         </li>
                     ))}
                 </ul>

@@ -28,7 +28,7 @@ export function handleSaveVoteForQuestion (question, answer, authedUser){
                 const _user = addVoteToUser(users, authedUser, qid, answer)
                 const _question = addVoteToQuestion(question, answer, authedUser)
                 dispatch(updateUser(_user))
-                dispatch(saveVoteForQuestion({_question, authedUser}))
+                dispatch(saveVoteForQuestion(_question, authedUser))
             })
 
             .catch((e) => {
@@ -60,7 +60,7 @@ function disablePressVoteForQuestion (question, authedUser){
     }
 }
 
-function saveVoteForQuestion ({question, authedUser}){
+function saveVoteForQuestion (question, authedUser){
     return {
         type: SAVE_VOTE_FOR_QUESTION,
         question,

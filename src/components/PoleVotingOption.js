@@ -14,7 +14,11 @@ class PoleVotingOption extends Component {
             this.props.authedUser))
     }
 
-
+     optionPercentage = () =>{
+        const numThisOptionVoted = this.question[this.props.optionName].votes.length
+        const  totalVotes = this.question["optionOne"].votes.length + this.question["optionTwo"].votes.length
+        return(numThisOptionVoted / totalVotes)
+    }
     render() {
         const { question, formattedQuestion, optionName, authedUser, didUserAnswer, didUserPressVote } = this.props
         if (!question) {
@@ -27,14 +31,19 @@ class PoleVotingOption extends Component {
         return (
 
             <div className='center'>
-                {console.log({didUserPressVote,didUserAnswer}) || (
                 <div>
                     {(!didUserPressVote && !didUserAnswer) && (
                     <button className="pole-vote-option-button"
                             onClick={() =>this.dispatchHandleSaveVoteForQuestion()}>Vote</button>
                     )}
+                    {didUserAnswer && (
+                        <div>You voted for: </div>
+                    )}
                     <h2 className="pole-vote-option">{option.text}</h2>
-                </div>)}
+                    {didUserAnswer && (
+                        <div>{()=>this.optionPercentage()}% voted for that option</div>
+                    )}
+                </div>
             </div>
         )
     }

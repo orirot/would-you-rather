@@ -5,6 +5,7 @@ import LoadingBar from 'react-redux-loading'
 import { handleInitialData } from '../actions/shared'
 import ListPoles from './ListPoles'
 import PoleVoting from './PoleVoting'
+import PoleSubmission from './PoleSubmission'
 
 class App extends Component {
 
@@ -15,9 +16,10 @@ class App extends Component {
   render() {
     return (
       <div className="App">
+          <PoleSubmission/>
           <LoadingBar />
         <ListPoles/>
-        <PoleVoting/>
+        <PoleVoting/>//TODO: disappears after Loading bar
       </div>
     );
   }

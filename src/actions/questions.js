@@ -1,44 +1,19 @@
 import { showLoading, hideLoading } from 'react-redux-loading'
 
-import { _saveQuestionAnswer } from "../utils/_Data";
+import { _saveQuestionAnswer, _saveQuestion } from "../utils/_Data";
 import {updateUser} from "./users";
-import authedUser from "../reducers/authedUser";
 // import {VOTED} from "../components/PoleVoting" //TODO
 
 export const RECEIVE_QUESTIONS = 'RECEIVE_QUESTIONS'
 export const SAVE_VOTE_FOR_QUESTION = 'SAVE_VOTE_FOR_QUESTION'
 export const PRESSED_VOTE_FOR_QUESTION = 'PRESSED_VOTE_FOR_QUESTION'
 export const DISABLE_PRESS_VOTE_FOR_QUESTION = 'DISABLE_PRESS_VOTE_FOR_QUESTION'
+export const SAVE_QUESTION = 'SAVE_QUESTION'
 
 export function receiveQuestions (questions){
     return {
         type: RECEIVE_QUESTIONS,
         questions,
-    }
-}
-
-export function handleSaveVoteForQuestion (question, answer, authedUser){
-    const qid = question.id
-    return (dispatch, getState) => {
-        dispatch (pressedVoteForQuestion(question, authedUser))
-        dispatch(showLoading())
-        return _saveQuestionAnswer({authedUser, qid, answer})
-            .then(() => {
-                const { users } = getState()
-                const _user = addVoteToUser(users, authedUser, qid, answer)
-                const _question = addVoteToQuestion(question, answer, authedUser)
-                dispatch(updateUser(_user))
-                dispatch(saveVoteForQuestion(_question, authedUser))
-            })
-
-            .catch((e) => {
-                console.warn('Error in handleSaveVoteForQuestion: ', e)
-                dispatch(disablePressVoteForQuestion(question, authedUser))
-                alert('Error in Saving the vote in the server. Try again.')
-            }).finally(() => {
-                dispatch(hideLoading())
-            })
-
     }
 }
 
@@ -68,6 +43,38 @@ function saveVoteForQuestion (question, authedUser){
     }
 }
 
+function saveQuestion (question){
+    return {
+        type: SAVE_QUESTION,
+        question
+    }
+}
+
+export function handleSaveVoteForQuestion (question, answer, authedUser){
+    const qid = question.id
+    return (dispatch, getState) => {
+        dispatch (pressedVoteForQuestion(question, authedUser))
+        dispatch(showLoading())
+        return _saveQuestionAnswer({authedUser, qid, answer})
+            .then(() => {
+                const { users } = getState()
+                const _user = addVoteToUser(users, authedUser, qid, answer)
+                const _question = addVoteToQuestion(question, answer, authedUser)
+                dispatch(updateUser(_user))
+                dispatch(saveVoteForQuestion(_question, authedUser))
+            })
+
+            .catch((e) => {
+                console.warn('Error in handleSaveVoteForQuestion: ', e)
+                dispatch(disablePressVoteForQuestion(question, authedUser))
+                alert('Error in Saving the vote in the server. Try again.')
+            }).finally(() => {
+                dispatch(hideLoading())
+            })
+
+    }
+}
+
 //return a question with the new vote inside
 const addVoteToQuestion= (question, chosenOptionName, authedUser) => {
     const _votes = question[chosenOptionName].votes.concat(authedUser)
@@ -87,14 +94,20 @@ const addVoteToUser = (users, authedUser, qid, answer) => {
     }
 }
 
-// handleVote = (question, option, authedUser) => {
-//     const _question = addVoteToQuestion(question, option)
-//     this.props.dispatch(handleSaveVoteForQuestion({
-//         question: _question,
-//         authedUser: authedUser
-//     }))
-// }
+export function handleSaveQuestion (question){
+    return (dispatch, ) => {
+        dispatch(showLoading())
+        return _saveQuestion(question)
+            .then((savedQuestion) => {
+                dispatch (saveQuestion(savedQuestion))
+            })
+            .catch((e) => {
+                console.warn('Error in handleSaveQuestion: ', e)
+                alert('Error in Saving the new question in the server. Try again.')
+            }).finally(() => {
+                dispatch(hideLoading())
+            })
 
-// export function handleSaveVote(){
-//
-// }
+    }
+}
+

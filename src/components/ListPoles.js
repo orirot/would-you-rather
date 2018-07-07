@@ -48,7 +48,7 @@ class ListPoles extends Component{
 
 
 
-function mapStaeToProps({authedUser, questions}){
+function mapStateToProps({authedUser, questions}){
     const questionsArray = Object.values(questions)
     const answeredQuestions = questionsArray.filter((q) => ((didUserVoteToQuestion(authedUser, q))))
     const notAnsweredQuestions = questionsArray.filter((q) => (!(didUserVoteToQuestion(authedUser, q))))
@@ -60,4 +60,4 @@ function mapStaeToProps({authedUser, questions}){
     }
 }
 
-export default connect(mapStaeToProps)(ListPoles)
+export default connect(mapStateToProps)(ListPoles)

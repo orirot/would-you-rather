@@ -94,12 +94,22 @@ const addVoteToUser = (users, authedUser, qid, answer) => {
     }
 }
 
+const addQuestionToUser = (users, authedUser, qid) => {
+    return {
+        ...users[authedUser],
+        questions: users[authedUser].questions.concat(qid)
+    }
+}
+
 export function handleSaveQuestion (question){
-    return (dispatch, ) => {
+    return (dispatch, getState) => {
         dispatch(showLoading())
         return _saveQuestion(question)
             .then((savedQuestion) => {
-                dispatch (saveQuestion(savedQuestion))
+                const { users } = getState()
+                const _user = addQuestionToUser(users, savedQuestion.author, savedQuestion.id)
+                dispatch (saveQuestion(savedQuestion))//TODO run two dispatches as one batch
+                dispatch(updateUser(_user)) //TODO run two dispatches as one batch
             })
             .catch((e) => {
                 console.warn('Error in handleSaveQuestion: ', e)

@@ -1,17 +1,19 @@
 import React, {Component} from 'react'
 import { connect } from 'react-redux'
 import LeaderboardSingleUser  from './LeaderboardSingleUser'
-// import {size} from 'lodash/size';
 var _ = require ('lodash')
 
 
 
 class Leaderboard extends Component {
 
+    sortByTotalQA = (a,b) =>{
+        return _.size(b.answers) + _.size(b.questions) - _.size(a.answers) - _.size(a.questions);
+    }
+
     sortUsersArray = (usersArray) => {
         if(usersArray.length>1) {
-            usersArray.sort((a, b) => (_.size(usersArray[a].answers) + usersArray[a].questions.length
-                - _.size(usersArray[b].answers) - usersArray[b].questions.length))
+            usersArray.sort((a, b) => this.sortByTotalQA(a,b))
         }
     }
 

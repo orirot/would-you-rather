@@ -1,5 +1,4 @@
 import { RECEIVE_QUESTIONS, SAVE_VOTE_FOR_QUESTION, PRESSED_VOTE_FOR_QUESTION, DISABLE_PRESS_VOTE_FOR_QUESTION, SAVE_QUESTION } from "../actions/questions";
-import authedUser from "./authedUser";
 
 export default function questions (state = {}, action) {
     switch(action.type) {

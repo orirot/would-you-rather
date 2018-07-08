@@ -42,17 +42,17 @@ class PoleSubmission extends Component {
                 <form className='new-question' onSubmit={this.handleSubmit}>
 
 
-                    <div class="form-group">
-                        <label for="option1">Option 1:</label>
-                        <input type="text" class="form-control"
+                    <div className="form-group">
+                        <label htmlFor="option1">Option 1:</label>
+                        <input type="text" className="form-control"
                                onChange={(event)=>this.handleChange(event, "optionOneText")}
                                placeholder="Write Option 1 text here"
                                value={optionOneText}/>
                     </div>
                     <br/>
-                    <div class="form-group">
-                        <label for="option2">Option 2:</label>
-                        <input type="text" class="form-control"
+                    <div className="form-group">
+                        <label htmlFor="option2">Option 2:</label>
+                        <input type="text" className="form-control"
                                onChange={(event)=>this.handleChange(event, "optionTwoText")}
                                placeholder="Write Option 2 text here"
                                value={optionTwoText}/>

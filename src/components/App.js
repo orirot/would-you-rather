@@ -6,6 +6,7 @@ import { handleInitialData } from '../actions/shared'
 import ListPoles from './ListPoles'
 import PoleVoting from './PoleVoting'
 import PoleSubmission from './PoleSubmission'
+import Leaderboard from './Leaderboard'
 
 class App extends Component {
 
@@ -18,7 +19,8 @@ class App extends Component {
       <div className="App">
           <PoleSubmission/>
           <LoadingBar />
-        <ListPoles/>
+        {/*<ListPoles/>*/}
+        <Leaderboard/>
         <PoleVoting/>//TODO: disappears after Loading bar
       </div>
     );

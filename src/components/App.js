@@ -7,6 +7,7 @@ import ListPoles from './ListPoles'
 import PoleVoting from './PoleVoting'
 import PoleSubmission from './PoleSubmission'
 import Leaderboard from './Leaderboard'
+import Login from './Login'
 
 class App extends Component {
 
@@ -17,6 +18,7 @@ class App extends Component {
   render() {
     return (
       <div className="App">
+          <Login/>
           <PoleSubmission/>
           <LoadingBar />
         {/*<ListPoles/>*/}

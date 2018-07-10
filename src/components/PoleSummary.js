@@ -1,13 +1,14 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import {formatQuestion, formatDate} from "../utils/helpers";
+import { Link } from 'react-router-dom'
 
 class PoleSummary extends Component {
 
     optionPercentage = (optionName) =>{
         const numThisOptionVoted = this.props.question[optionName].votes.length
         const  totalVotes = this.props.question["optionOne"].votes.length + this.props.question["optionTwo"].votes.length
-        return(numThisOptionVoted / totalVotes)
+        return(100*(numThisOptionVoted / totalVotes))
     }
 
     render() {
@@ -16,9 +17,9 @@ class PoleSummary extends Component {
         if (formattedQuestion === null) {
             return <p>This Question doesn't exist</p>
         }
-        const {authorName, avatar, timestamp, optionOneText, optionTwoText, optionOneVotes, optionTwoVotes} = formattedQuestion
+        const {id, authorName, avatar, timestamp, optionOneText, optionTwoText, optionOneVotes, optionTwoVotes} = formattedQuestion
         return (
-            <div className='pole-summary'>
+            <Link to={`/pole/${id}`} className='pole-summary'>
                 <img
                     src={avatar}
                     alt={`Avatar of ${authorName}`}
@@ -42,7 +43,7 @@ class PoleSummary extends Component {
                         )}
                     </div>
                 </div>
-            </div>
+            </Link>
         )
     }
 }

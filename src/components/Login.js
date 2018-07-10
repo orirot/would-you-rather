@@ -8,7 +8,7 @@ class Login extends Component {
         debugger
         this.props.dispatch(setAuthedUser(e.valueOf()))
     }
-    
+
     render() {
 
         const users = Object.values(this.props.users)

@@ -41,10 +41,9 @@ class PoleVoting extends Component {
     }
 }
 
-//TODO: add question id to mapStateToProps
-function mapStateToProps({authedUser, users, questions}) {
-    const question = questions["am8ehyc8byjqgar0jgpub9"]
-
+function mapStateToProps({authedUser, users, questions}, props) {
+    const { id } = props.match.params
+    const question = questions[id]
     return {
         authedUser,
         question,

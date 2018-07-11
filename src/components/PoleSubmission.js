@@ -1,12 +1,14 @@
 import React, {Component} from 'react'
 import { connect } from 'react-redux'
 import { handleSaveQuestion } from "../actions/questions";
+import { Redirect } from 'react-router-dom'
 
 class PoleSubmission extends Component {
 
     state = {
         optionOneText: '',
-        optionTwoText: ''
+        optionTwoText: '',
+        toHome: false
     }
 
     handleChange = (e, textToChange) => {
@@ -27,12 +29,17 @@ class PoleSubmission extends Component {
 
         this.setState(() => ({
             optionOneText: '',
-            optionTwoText: ''
+            optionTwoText: '',
+            toHome: true
         }))
     }
 
     render() {
-        const { optionOneText, optionTwoText } = this.state
+        const { optionOneText, optionTwoText, toHome } = this.state
+
+        if (toHome === true) {
+            return <Redirect to='/' />
+        }
 
         return (
             <div>

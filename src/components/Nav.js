@@ -11,7 +11,12 @@ export default function Nav () {
                     </NavLink>
                 </li>
                 <li>
-                    <NavLink to='/new' activeClassName='active'>
+                    <NavLink to='/leaderboard' activeClassName='active'>
+                        Leader Board
+                    </NavLink>
+                </li>
+                <li>
+                    <NavLink to='/add' activeClassName='active'>
                         New Pole
                     </NavLink>
                 </li>
@@ -19,3 +24,8 @@ export default function Nav () {
         </nav>
     )
 }
+
+
+//adding the login verification. authoirization verification
+//adding what the user chose when voted to be shown clearly
+//404

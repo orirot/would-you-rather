@@ -15,7 +15,8 @@ class PoleSummary extends Component {
         const { formattedQuestion , wasAnsweredByUser} = this.props
 
         if (formattedQuestion === null) {
-            return <p>This Question doesn't exist</p>
+            return
+            <div><p>404                This Question doesn't exist</p></div>
         }
         const {id, authorName, avatar, timestamp, optionOneText, optionTwoText, optionOneVotes, optionTwoVotes} = formattedQuestion
         return (

@@ -30,13 +30,11 @@ class App extends Component {
                             : <div>
                                 <Route path='/' exact component={ListPoles}/>
                                 <Route path='/pole/:id' component={PoleVoting}/>
-                                <Route path='/new' component={PoleSubmission}/>
+                                <Route path='/add' component={PoleSubmission}/>
+                                <Route path='/leaderboard' component={Leaderboard}/>
 
                             </div>
                                 }
-
-                        {/*<Leaderboard/>*/}
-                        {/*<PoleVoting/>//TODO: disappears after Loading bar*/}
                     </div>
                 </Fragment>
             </Router>

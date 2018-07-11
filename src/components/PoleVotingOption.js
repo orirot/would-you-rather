@@ -43,7 +43,6 @@ class PoleVotingOption extends Component {
     }
 }
 
-//TODO: add question id to mapStateToProps
 function mapStateToProps ({authedUser}, {optionName, question}) {
     return {
         optionName,

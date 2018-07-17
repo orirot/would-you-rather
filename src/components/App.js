@@ -9,6 +9,7 @@ import PoleVoting from './PoleVoting'
 import PoleSubmission from './PoleSubmission'
 import Leaderboard from './Leaderboard'
 import Login from './Login'
+import PrivateRoute from './PrivateRoute'
 import Nav from './Nav'
 
 class App extends Component {
@@ -28,10 +29,12 @@ class App extends Component {
                         {this.props.loading === true
                             ? null
                             : <div>
-                                <Route path='/' exact component={ListPoles}/>
-                                <Route path='/pole/:id' component={PoleVoting}/>
-                                <Route path='/add' component={PoleSubmission}/>
-                                <Route path='/leaderboard' component={Leaderboard}/>
+
+                                <PrivateRoute path='/' exact component={"ListPoles"}/>
+                                <PrivateRoute path='/pole/:id' component={"PoleVoting"}/>
+                                <PrivateRoute path='/add' component={"PoleSubmission"}/>
+                                <PrivateRoute path='/leaderboard' component={"Leaderboard"}/>
+                                <PrivateRoute path='/login' component={"Login"}/>
 
                             </div>
                                 }

@@ -1,12 +1,33 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import { setAuthedUser } from "../actions/authedUser";
+import {Redirect} from 'react-router-dom'
 
 class Login extends Component {
 
-    _setAuthedUser = (e)=>{
-        debugger
-        this.props.dispatch(setAuthedUser(e.valueOf()))
+    state = {
+        user: ''
+    }
+
+    handleChange(event) {
+        this.setState({
+            user: event.target.value
+        })
+    }
+
+    handleSubmit = ()=>{
+        const user = this.state.user
+        this.setState({
+            user: ''
+        })
+        this.props.dispatch(setAuthedUser(user))
+    }
+
+    isAuthenticated = () => {
+        if (this.props.authedUser !== null && this.props.authedUser !== undefined) {
+            return true
+        }
+        return false
     }
 
     render() {
@@ -15,21 +36,27 @@ class Login extends Component {
 
         return (
             <div>
-                {console.log(users) || (users && (
-                    <form className="login" onSubmit={(event) => this._setAuthedUser(event)}>
+                {this.isAuthenticated() ? (<Redirect
+                    to={{
+                        pathname: "/"
+                    }}
+                />):
+                console.log(users) || (users && (
+                    <form className="login" onSubmit={() => this.handleSubmit()}>
                         <div>
-                            <select name="users">
+                            <select name="users" onChange={(event) => this.handleChange(event)}>
                                 {users.map((u) => (
-                                    <option key={u.id} value={u.id}>{u.name}</option>
+                                    <option key={u.id} value={u.id} >{u.name}</option>
                                 ))}
 
                             </select>
                         </div>
 
                         <div>
-                            <button className='btn' type='submit'>
+{/*                            <button className='btn' type='submit'  onClick={(event) => this._setAuthedUser(event)}>
                                 Submit
-                            </button>
+                            </button>*/}
+                            <input className='btn' type='submit'/>
                         </div>
                     </form>
                 ))}
@@ -38,9 +65,10 @@ class Login extends Component {
     }
 }
 
-function mapStateToProps({users}) {
+function mapStateToProps({users, authedUser}) {
     return {
-        users
+        users,
+        authedUser
     }
 }
 

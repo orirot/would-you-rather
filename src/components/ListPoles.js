@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
+import {Redirect} from 'react-router-dom'
+
 import PoleSummary from "./PoleSummary";
-import { didUserVoteToQuestion }from '../utils/helpers'
+import { didUserVoteToQuestion, isAuthenticated}from '../utils/helpers'
+
 class ListPoles extends Component{
 
     state = {
@@ -21,26 +24,33 @@ class ListPoles extends Component{
         }
         return (
             <div>
-                <div className="center">
-                    <button className="btn" onClick={() =>this.toggleShowAnswered()}
-                            style={{opacity: showAnsweredPoles ? 1 : 0.2}}
-                            disabled={showAnsweredPoles}>
-                        "Answered Poles"
-                    </button>
-                    <button className="btn" onClick={() =>this.toggleShowAnswered()}
-                            style={{opacity: !showAnsweredPoles ? 1 : 0.2}}
-                            disabled={!showAnsweredPoles}>
-                        "Not Answered Poles"
-                    </button>
-                </div>
+                {!isAuthenticated(this.props.authedUser) ? (<Redirect
+                    to={{
+                        pathname: "/login"
+                    }}
+                />):(
+                <div>
+                    <div className="center">
+                        <button className="btn" onClick={() =>this.toggleShowAnswered()}
+                                style={{opacity: showAnsweredPoles ? 1 : 0.2}}
+                                disabled={showAnsweredPoles}>
+                            "Answered Poles"
+                        </button>
+                        <button className="btn" onClick={() =>this.toggleShowAnswered()}
+                                style={{opacity: !showAnsweredPoles ? 1 : 0.2}}
+                                disabled={!showAnsweredPoles}>
+                            "Not Answered Poles"
+                        </button>
+                    </div>
 
-                <ul>
-                    {listToShow.questionsToShow.map((q)=>(
-                        <li key={q.id}>
-                            <PoleSummary id={q.id} wasAnsweredByUser={showAnsweredPoles}/>
-                        </li>
-                    ))}
-                </ul>
+                    <ul>
+                        {listToShow.questionsToShow.map((q)=>(
+                            <li key={q.id}>
+                                <PoleSummary id={q.id} wasAnsweredByUser={showAnsweredPoles}/>
+                            </li>
+                        ))}
+                    </ul>
+                </div>)}
             </div>
         )
     }
@@ -56,7 +66,8 @@ function mapStateToProps({authedUser, questions}){
         notAnsweredQuestions: notAnsweredQuestions
             .sort((a,b) => b.timestamp - a.timestamp),
         answeredQuestions: answeredQuestions
-            .sort((a,b) => b.timestamp - a.timestamp)
+            .sort((a,b) => b.timestamp - a.timestamp),
+        authedUser
     }
 }
 

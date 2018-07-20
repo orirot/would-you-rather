@@ -30,11 +30,17 @@ class App extends Component {
                             ? null
                             : <div>
 
-                                <PrivateRoute path='/' exact component={"ListPoles"}/>
-                                <PrivateRoute path='/pole/:id' component={"PoleVoting"}/>
-                                <PrivateRoute path='/add' component={"PoleSubmission"}/>
-                                <PrivateRoute path='/leaderboard' component={"Leaderboard"}/>
-                                <PrivateRoute path='/login' component={"Login"}/>
+                                {/*<PrivateRoute path='/' exact component={ListPoles}/>*/}
+                                {/*<PrivateRoute path='/pole/:id' component={PoleVoting}/>*/}
+                                {/*<PrivateRoute path='/add' component={PoleSubmission}/>*/}
+                                {/*<PrivateRoute path='/leaderboard' component={Leaderboard}/>*/}
+                                {/*<PrivateRoute path='/login' component={Login}/>*/}
+
+                                <Route path='/' exact component={ListPoles}/>
+                                <Route path='/pole/:id' component={PoleVoting}/>
+                                <Route path='/add' component={PoleSubmission}/>
+                                <Route path='/leaderboard' component={Leaderboard}/>
+                                <Route path='/login' component={Login}/>
 
                             </div>
                                 }

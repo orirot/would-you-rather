@@ -16,11 +16,12 @@ class Login extends Component {
     }
 
     handleSubmit = ()=>{
-        const user = this.state.user
+        const _user = this.state.user
         this.setState({
             user: ''
         })
-        this.props.dispatch(setAuthedUser(user))
+        this.props.dispatch(setAuthedUser(_user))
+        this.props.dispatch(setAuthedUser(_user))
     }
 
     isAuthenticated = () => {
@@ -41,10 +42,11 @@ class Login extends Component {
                         pathname: "/"
                     }}
                 />):
-                console.log(users) || (users && (
+              (users && (
                     <form className="login" onSubmit={() => this.handleSubmit()}>
                         <div>
-                            <select name="users" onChange={(event) => this.handleChange(event)}>
+                            <select required name="users" onChange={(event) => this.handleChange(event)}>
+                                <option disabled selected value=""> -- select an option -- </option>
                                 {users.map((u) => (
                                     <option key={u.id} value={u.id} >{u.name}</option>
                                 ))}
@@ -53,9 +55,6 @@ class Login extends Component {
                         </div>
 
                         <div>
-{/*                            <button className='btn' type='submit'  onClick={(event) => this._setAuthedUser(event)}>
-                                Submit
-                            </button>*/}
                             <input className='btn' type='submit'/>
                         </div>
                     </form>

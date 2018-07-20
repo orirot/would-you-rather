@@ -2,10 +2,6 @@ import React, {Component, Fragment} from 'react'
 import {Redirect, Route} from 'react-router-dom'
 import {connect} from 'react-redux'
 
-import ListPoles from './ListPoles'
-import PoleVoting from './PoleVoting'
-import PoleSubmission from './PoleSubmission'
-import Leaderboard from './Leaderboard'
 import Login from './Login'
 
 class PrivateRoute extends Component {
@@ -13,7 +9,7 @@ class PrivateRoute extends Component {
 
 
     isAuthenticated = () => {
-        if (this.props.authedUser != null && this.props.authedUser != undefined) {
+        if (this.props.authedUser !== null && this.props.authedUser !== undefined) {
             return true
         }
         return false

@@ -2,7 +2,6 @@ import { showLoading, hideLoading } from 'react-redux-loading'
 
 import { _saveQuestionAnswer, _saveQuestion } from "../utils/_Data";
 import {updateUser} from "./users";
-// import {VOTED} from "../components/PoleVoting" //TODO
 
 export const RECEIVE_QUESTIONS = 'RECEIVE_QUESTIONS'
 export const SAVE_VOTE_FOR_QUESTION = 'SAVE_VOTE_FOR_QUESTION'
@@ -18,7 +17,7 @@ export function receiveQuestions (questions){
 }
 
 function pressedVoteForQuestion (question, authedUser){
-    question.voted = true //TODO: hardcoded
+    question.voted = true
     return {
         type: PRESSED_VOTE_FOR_QUESTION,
         question,
@@ -27,7 +26,7 @@ function pressedVoteForQuestion (question, authedUser){
 }
 
 function disablePressVoteForQuestion (question, authedUser){
-    question.voted = false //TODO: hardcoded
+    question.voted = false
     return {
         type: DISABLE_PRESS_VOTE_FOR_QUESTION,
         question,

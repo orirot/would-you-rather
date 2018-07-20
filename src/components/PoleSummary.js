@@ -8,16 +8,12 @@ class PoleSummary extends Component {
     optionPercentage = (optionName) =>{
         const numThisOptionVoted = this.props.question[optionName].votes.length
         const  totalVotes = this.props.question["optionOne"].votes.length + this.props.question["optionTwo"].votes.length
-        return(100*(numThisOptionVoted / totalVotes))
+        const roundedNum = (100*(numThisOptionVoted / totalVotes)).toFixed(2)
+        return roundedNum
     }
 
     render() {
         const { formattedQuestion , wasAnsweredByUser} = this.props
-
-        if (formattedQuestion === null) {
-            return
-            <div><p>404                This Question doesn't exist</p></div>
-        }
         const {id, authorName, avatar, timestamp, optionOneText, optionTwoText, optionOneVotes, optionTwoVotes} = formattedQuestion
         return (
             <Link to={`/pole/${id}`} className='pole-summary'>

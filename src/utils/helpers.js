@@ -34,3 +34,10 @@ export function didUserVoteToOption (userId, option){
     }
     return false;
 }
+
+export function isAuthenticated (authedUser){
+    if (authedUser !== null && authedUser !== undefined) {
+        return true
+    }
+    return false
+}

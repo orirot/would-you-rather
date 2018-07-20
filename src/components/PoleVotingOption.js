@@ -4,7 +4,6 @@ import { didUserVoteToQuestion, didUserVoteToOption} from "../utils/helpers";
 import {handleSaveVoteForQuestion} from "../actions/questions";
 import PoleSummary from './PoleSummary'
 
-//export const VOTED = 'voted' //TODO
 
 class PoleVotingOption extends Component {
 
@@ -17,10 +16,6 @@ class PoleVotingOption extends Component {
 
     render() {
         const { question, optionName, authedUser, didUserAnswer, didUserPressVote } = this.props
-        if (!question) {
-            return <p>This Question doesn't exist</p>
-        }
-
         const option = question[optionName]
         return (
 

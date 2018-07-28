@@ -12,6 +12,7 @@ import Login from './Login'
 import PrivateRoute from './PrivateRoute'
 import Signout from './Signout'
 import Nav from './Nav'
+import NotFound from './NotFound'
 import {isAuthenticated} from "../utils/helpers";
 
 class App extends Component {
@@ -38,6 +39,7 @@ class App extends Component {
                                     <PrivateRoute path='/questions/:id' component={PoleVoting}/>
                                     <PrivateRoute path='/add' component={PoleSubmission}/>
                                     <PrivateRoute path='/leaderboard' component={Leaderboard}/>
+                                    <PrivateRoute component={NotFound}/>
                                 </Switch>
                             </Fragment>}
                     </div>

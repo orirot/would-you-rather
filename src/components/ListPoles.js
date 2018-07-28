@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
-import {Redirect} from 'react-router-dom'
 
 import PoleSummary from "./PoleSummary";
-import { didUserVoteToQuestion, isAuthenticated}from '../utils/helpers'
+import { didUserVoteToQuestion }from '../utils/helpers'
 
 class ListPoles extends Component{
 

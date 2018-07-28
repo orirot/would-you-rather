@@ -9,11 +9,27 @@ class Signout extends Component {
         this.props.dispatch(signOut())
     }
 
+    getUserFullName = () => {
+        const _user = this.props.users[this.props.authedUser]
+        return _user.name
+}
+
     render() {
         return (
-           <button onClick={() => this.signout()}>signout</button>
+            <div>
+                <span>Hi {this.getUserFullName()}</span>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <button onClick={() => this.signout()}>signout</button>
+            </div>
         )
     }
 }
 
-export default connect()(Signout);
+function mapStateToProps ({users, authedUser}, {optionName, question}) {
+    return {
+        authedUser,
+        users
+    }
+}
+
+export default connect(mapStateToProps)(Signout);

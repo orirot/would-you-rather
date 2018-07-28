@@ -1,8 +1,7 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {Redirect} from 'react-router-dom'
 
-import {formatQuestion, didUserVoteToQuestion, isAuthenticated} from "../utils/helpers";
+import {formatQuestion, didUserVoteToQuestion} from "../utils/helpers";
 import PoleVotingOption from './PoleVotingOption'
 import PoleSummary from './PoleSummary'
 

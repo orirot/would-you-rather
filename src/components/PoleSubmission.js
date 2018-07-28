@@ -2,7 +2,6 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {Redirect} from 'react-router-dom'
 
-import {isAuthenticated} from "../utils/helpers";
 import {handleSaveQuestion} from "../actions/questions";
 
 class PoleSubmission extends Component {

@@ -17,6 +17,10 @@ body {
     cursor: pointer;
 }
 
+.pole-summary-option{
+    background-color: #75ff78;
+}
+
 a {
   text-decoration: none;
   color: #252525;

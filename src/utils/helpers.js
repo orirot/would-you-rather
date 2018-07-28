@@ -41,3 +41,7 @@ export function isAuthenticated (authedUser){
     }
     return false
 }
+
+export function wasOptionVotedByUser (question, user, option){
+    return question[option].votes.includes(user)
+}

@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import {formatQuestion, formatDate} from "../utils/helpers";
+import {formatQuestion, formatDate, wasOptionVotedByUser} from "../utils/helpers";
 import { Link } from 'react-router-dom'
+import authedUser from "../reducers/authedUser";
 
 class PoleSummary extends Component {
 
@@ -13,8 +14,9 @@ class PoleSummary extends Component {
     }
 
     render() {
-        const { formattedQuestion , wasAnsweredByUser} = this.props
+        const {question, formattedQuestion , wasAnsweredByUser, authedUser} = this.props
         const {id, authorName, avatar, timestamp, optionOneText, optionTwoText, optionOneVotes, optionTwoVotes} = formattedQuestion
+        const options = ["optionOne", "optionTwo"]
         return (
             <Link to={`/questions/${id}`} className='pole-summary'>
                 <img
@@ -27,18 +29,14 @@ class PoleSummary extends Component {
                         <span>{authorName}</span>
                         <div>{formatDate(timestamp)}</div>
                     </div>
-                    <div>
-                        <span>{optionOneText}: {optionOneVotes}</span>
-                        {wasAnsweredByUser && (
-                            <div>%{this.optionPercentage("optionOne")}</div>
-                        )}
-                    </div>
-                    <div>
-                        <span>{optionTwoText}: {optionTwoVotes}</span>
-                        {wasAnsweredByUser && (
-                            <div>%{this.optionPercentage("optionTwo")}</div>
-                        )}
-                    </div>
+                    {options.map(option => {
+                        return  <div className={wasOptionVotedByUser(question,authedUser, option) ? "pole-summary-option":""}>
+                            <span>{optionOneText}{wasAnsweredByUser && (`: ` + optionOneVotes)}</span>
+                            {wasAnsweredByUser && (
+                                <div>%{this.optionPercentage(option)}</div>
+                            )}
+                        </div>
+                    })}
                 </div>
             </Link>
         )
@@ -47,6 +45,7 @@ class PoleSummary extends Component {
 
 function mapStateToProps ({authedUser, users, questions}, { id, wasAnsweredByUser }) {
     const question = questions[id]
+    console.log({question})
     return {
         authedUser,
         formattedQuestion: question

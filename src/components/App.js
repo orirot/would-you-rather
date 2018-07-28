@@ -1,5 +1,5 @@
 import React, {Component, Fragment} from 'react'
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
+import {BrowserRouter as Router, Route, Switch} from 'react-router-dom'
 import {connect} from 'react-redux'
 import LoadingBar from 'react-redux-loading'
 
@@ -10,7 +10,9 @@ import PoleSubmission from './PoleSubmission'
 import Leaderboard from './Leaderboard'
 import Login from './Login'
 import PrivateRoute from './PrivateRoute'
+import Signout from './Signout'
 import Nav from './Nav'
+import {isAuthenticated} from "../utils/helpers";
 
 class App extends Component {
 
@@ -27,14 +29,17 @@ class App extends Component {
                         <Nav/>
                         {this.props.loading === true
                             ? null
-                            : <Switch>
-                                <Route path='/login' component={Login}/>
-                                <PrivateRoute path='/' exact component={ListPoles}/>
-                                <PrivateRoute path='/pole/:id' component={PoleVoting}/>
-                                <PrivateRoute path='/add' component={PoleSubmission}/>
-                                <PrivateRoute path='/leaderboard' component={Leaderboard}/>
-                              </Switch>
-                                }
+                            :
+                            <Fragment>
+                                {isAuthenticated(this.props.authedUser) && (<Signout/>)}
+                                <Switch>
+                                    <Route path='/login' component={Login}/>
+                                    <PrivateRoute path='/' exact component={ListPoles}/>
+                                    <PrivateRoute path='/pole/:id' component={PoleVoting}/>
+                                    <PrivateRoute path='/add' component={PoleSubmission}/>
+                                    <PrivateRoute path='/leaderboard' component={Leaderboard}/>
+                                </Switch>
+                            </Fragment>}
                     </div>
                 </Fragment>
             </Router>
@@ -42,4 +47,11 @@ class App extends Component {
     }
 }
 
-export default connect()(App);
+function mapStateToProps({authedUser}) {
+    return {
+        authedUser
+    }
+}
+
+
+export default connect(mapStateToProps)(App);

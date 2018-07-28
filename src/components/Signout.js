@@ -18,8 +18,7 @@ class Signout extends Component {
         return (
             <div>
                 <span>Hi {this.getUserFullName()}</span>
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <button onClick={() => this.signout()}>signout</button>
+                <button style={{marginLeft: '25px'}} onClick={() => this.signout()}>signout</button>
             </div>
         )
     }

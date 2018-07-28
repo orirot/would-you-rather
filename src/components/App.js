@@ -35,7 +35,7 @@ class App extends Component {
                                 <Switch>
                                     <Route path='/login' component={Login}/>
                                     <PrivateRoute path='/' exact component={ListPoles}/>
-                                    <PrivateRoute path='/pole/:id' component={PoleVoting}/>
+                                    <PrivateRoute path='/questions/:id' component={PoleVoting}/>
                                     <PrivateRoute path='/add' component={PoleSubmission}/>
                                     <PrivateRoute path='/leaderboard' component={Leaderboard}/>
                                 </Switch>

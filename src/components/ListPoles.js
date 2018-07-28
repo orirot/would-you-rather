@@ -24,11 +24,6 @@ class ListPoles extends Component{
         }
         return (
             <div>
-                {!isAuthenticated(this.props.authedUser) ? (<Redirect
-                    to={{
-                        pathname: "/login"
-                    }}
-                />):(
                 <div>
                     <div className="center">
                         <button className="btn" onClick={() =>this.toggleShowAnswered()}
@@ -50,7 +45,7 @@ class ListPoles extends Component{
                             </li>
                         ))}
                     </ul>
-                </div>)}
+                </div>
             </div>
         )
     }

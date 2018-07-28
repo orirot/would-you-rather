@@ -16,7 +16,7 @@ class PoleSummary extends Component {
         const { formattedQuestion , wasAnsweredByUser} = this.props
         const {id, authorName, avatar, timestamp, optionOneText, optionTwoText, optionOneVotes, optionTwoVotes} = formattedQuestion
         return (
-            <Link to={`/pole/${id}`} className='pole-summary'>
+            <Link to={`/questions/${id}`} className='pole-summary'>
                 <img
                     src={avatar}
                     alt={`Avatar of ${authorName}`}

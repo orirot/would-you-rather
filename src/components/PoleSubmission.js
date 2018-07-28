@@ -45,11 +45,7 @@ class PoleSubmission extends Component {
 
         return (
             <div>
-                {!isAuthenticated(this.props.authedUser) ? (<Redirect
-                    to={{
-                        pathname: "/login"
-                    }}
-                />) : (
+
                     <div>
 
                         <h1>WOULD YOU RATHER</h1>
@@ -79,9 +75,8 @@ class PoleSubmission extends Component {
                                 disabled={optionOneText === '' || optionTwoText === ''}>
                                 Submit
                             </button>
-
                         </form>
-                    </div>)}
+                    </div>
             </div>
         )
     }

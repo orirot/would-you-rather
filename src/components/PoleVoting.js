@@ -19,31 +19,26 @@ class PoleVoting extends Component {
 
         return (
             <div>
-                {!isAuthenticated(this.props.authedUser) ? (<Redirect
-                    to={{
-                        pathname: "/login"
-                    }}
-                />) : (
-                    <div className='center'>
-                        {!_didUserVoteToQuestion && (
+                <div className='center'>
+                    {!_didUserVoteToQuestion && (
+                        <div>
+                            <h1>WOULD YOU RATHER</h1>
+                            <img
+                                src={avatar}
+                                alt={`Avatar of ${authorName}`}
+                                className='bigAvatar'
+                            />
                             <div>
-                                <h1>WOULD YOU RATHER</h1>
-                                <img
-                                    src={avatar}
-                                    alt={`Avatar of ${authorName}`}
-                                    className='bigAvatar'
-                                />
-                                <div>
-                                    <PoleVotingOption optionName="optionOne" question={question}/>
-                                    <PoleVotingOption optionName="optionTwo" question={question}/>
-                                </div>
-                            </div>)}
-                        {_didUserVoteToQuestion && (
-                            <div>
-                                <PoleSummary id={question.id} wasAnsweredByUser={true}/>
+                                <PoleVotingOption optionName="optionOne" question={question}/>
+                                <PoleVotingOption optionName="optionTwo" question={question}/>
                             </div>
-                        )}
-                    </div>)}
+                        </div>)}
+                    {_didUserVoteToQuestion && (
+                        <div>
+                            <PoleSummary id={question.id} wasAnsweredByUser={true}/>
+                        </div>
+                    )}
+                </div>
             </div>
         )
     }

@@ -1,9 +1,6 @@
 import React, {Component} from 'react'
 import { connect } from 'react-redux'
 import LeaderboardSingleUser  from './LeaderboardSingleUser'
-import {Redirect} from 'react-router-dom'
-
-import { isAuthenticated } from "../utils/helpers";
 
 var _ = require ('lodash')
 
@@ -20,21 +17,13 @@ class Leaderboard extends Component {
     }
 
     render() {
-
         const usersArray = Object.values(this.props.users)
 
         this.sortUsersArray(usersArray)
 
         return (
             <div>
-
-                {!isAuthenticated(this.props.authedUser) ? (<Redirect
-                        to={{
-                            pathname: "/login"
-                        }}
-                    />):(
-
-                usersArray.length > 0 && (
+                {usersArray.length > 0 && (
                     <ul>
                         {usersArray.map((u)=>(
                             <li key={u.id}>
@@ -42,17 +31,15 @@ class Leaderboard extends Component {
                             </li>
                         ))}
                     </ul>
-                )
-                    )}
+                )}
             </div>
         )
     }
 }
 
-function mapStateToProps ({users, authedUser}) {
+function mapStateToProps ({users}) {
     return {
-        users,
-        authedUser
+        users
     }
 }
 

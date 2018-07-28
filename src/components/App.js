@@ -1,5 +1,5 @@
 import React, {Component, Fragment} from 'react'
-import { BrowserRouter as Router, Route } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import {connect} from 'react-redux'
 import LoadingBar from 'react-redux-loading'
 
@@ -24,25 +24,16 @@ class App extends Component {
                 <Fragment>
                     <LoadingBar/>
                     <div className="container">
-
                         <Nav/>
                         {this.props.loading === true
                             ? null
-                            : <div>
-
-                                {/*<PrivateRoute path='/' exact component={ListPoles}/>*/}
-                                {/*<PrivateRoute path='/pole/:id' component={PoleVoting}/>*/}
-                                {/*<PrivateRoute path='/add' component={PoleSubmission}/>*/}
-                                {/*<PrivateRoute path='/leaderboard' component={Leaderboard}/>*/}
-                                {/*<PrivateRoute path='/login' component={Login}/>*/}
-
-                                <Route path='/' exact component={ListPoles}/>
-                                <Route path='/pole/:id' component={PoleVoting}/>
-                                <Route path='/add' component={PoleSubmission}/>
-                                <Route path='/leaderboard' component={Leaderboard}/>
+                            : <Switch>
                                 <Route path='/login' component={Login}/>
-
-                            </div>
+                                <PrivateRoute path='/' exact component={ListPoles}/>
+                                <PrivateRoute path='/pole/:id' component={PoleVoting}/>
+                                <PrivateRoute path='/add' component={PoleSubmission}/>
+                                <PrivateRoute path='/leaderboard' component={Leaderboard}/>
+                              </Switch>
                                 }
                     </div>
                 </Fragment>

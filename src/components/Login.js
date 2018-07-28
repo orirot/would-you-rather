@@ -1,12 +1,19 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import { setAuthedUser } from "../actions/authedUser";
-import {Redirect} from 'react-router-dom'
+import {withRouter} from 'react-router-dom'
+import qs from 'query-string'
 
 class Login extends Component {
 
     state = {
-        user: ''
+        user: 'default'
+    }
+
+    componentDidUpdate(prevProps) {
+        if (prevProps.authedUser === null &&this.props.authedUser !== prevProps.authedUser) {
+            this.redirectIfAuthed()
+        }
     }
 
     handleChange(event) {
@@ -15,45 +22,39 @@ class Login extends Component {
         })
     }
 
-    handleSubmit = ()=>{
+    handleSubmit = (e)=>{
+        e.preventDefault()
+        e.stopPropagation()
         const _user = this.state.user
         this.setState({
             user: ''
         })
         this.props.dispatch(setAuthedUser(_user))
-        this.props.dispatch(setAuthedUser(_user))
     }
 
-    isAuthenticated = () => {
-        if (this.props.authedUser !== null && this.props.authedUser !== undefined) {
-            return true
-        }
-        return false
+    redirectIfAuthed = () => {
+        const { location, history } = this.props
+        const query = qs.parse(location.search)
+        history.push(query.next || '/')
     }
 
     render() {
-
         const users = Object.values(this.props.users)
+        const { user } = this.state
 
         return (
             <div>
-                {this.isAuthenticated() ? (<Redirect
-                    to={{
-                        pathname: "/"
-                    }}
-                />):
-              (users && (
-                    <form className="login" onSubmit={() => this.handleSubmit()}>
+                {(users && (
+                    <form className="login" onSubmit={(e) => this.handleSubmit(e)}>
                         <div>
-                            <select required name="users" onChange={(event) => this.handleChange(event)}>
-                                <option disabled selected value=""> -- select an option -- </option>
+                            <select value={user} required name="users" onChange={(event) => this.handleChange(event)}>
+                                <option value='default' disabled> -- select an option -- </option>
                                 {users.map((u) => (
                                     <option key={u.id} value={u.id} >{u.name}</option>
                                 ))}
 
                             </select>
                         </div>
-
                         <div>
                             <input className='btn' type='submit'/>
                         </div>
@@ -71,5 +72,4 @@ function mapStateToProps({users, authedUser}) {
     }
 }
 
-
-export default connect(mapStateToProps)(Login)
+export default withRouter(connect(mapStateToProps)(Login))

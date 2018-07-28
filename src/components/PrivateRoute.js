@@ -1,50 +1,25 @@
-import React, {Component, Fragment} from 'react'
-import {Redirect, Route} from 'react-router-dom'
+import React, {Component} from 'react'
+import {Route} from 'react-router-dom'
 import {connect} from 'react-redux'
+import {withRouter, Redirect} from 'react-router-dom'
 
-import Login from './Login'
+import {isAuthenticated} from "../utils/helpers";
 
 class PrivateRoute extends Component {
-
-
-
-    isAuthenticated = () => {
-        if (this.props.authedUser !== null && this.props.authedUser !== undefined) {
-            return true
-        }
-        return false
-    }
-
     render() {
-        const {Comp, path} = this.props
-        // console.log({authed: this.props.authedUser, componenttt: this.props.Comp})
-        const isAuth = this.isAuthenticated()
-        console.log({isAuth, Comp})
+        const {Comp, path, authedUser, location} = this.props
+        const isAuth = isAuthenticated(authedUser)
+
         if (isAuth){
             return <Route path ={path} component={Comp}/>
-        }else{
-            return <Route path ={path} component={Login}/>
+        } else {
+            const to = {
+                pathname: '/login',
+                search: `?next=${encodeURIComponent(location.pathname)}`
+            }
+            return <Redirect to={to} />
         }
-        return null
-/*        return (
-            <Route
-                {...rest}
-                render ={(props)=> (
-                    () => this.isAuthenticated() ? (
-                        <Comp {...props} />
-                    ) : (
-                        <Redirect
-                            to={{
-                                pathname: "/login"
-                                // state: { from: props.location }
-                            }}
-                        />
-                    )
-                )}
-            />
-        )*/
     }
-
 }
 
 function mapStateToProps({authedUser}, {component: Comp, path}) {
@@ -55,4 +30,4 @@ function mapStateToProps({authedUser}, {component: Comp, path}) {
     }
 }
 
-export default connect(mapStateToProps)(PrivateRoute)
+export default withRouter(connect(mapStateToProps)(PrivateRoute))

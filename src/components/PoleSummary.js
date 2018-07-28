@@ -16,7 +16,7 @@ class PoleSummary extends Component {
     render() {
         const {question, formattedQuestion , wasAnsweredByUser, authedUser} = this.props
         const {id, authorName, avatar, timestamp, optionOneText, optionTwoText, optionOneVotes, optionTwoVotes} = formattedQuestion
-        const options = ["optionOne", "optionTwo"]
+        const options = [{option: "optionOne", text: optionOneText, votes: optionOneVotes}, {option: "optionTwo", text: optionTwoText, votes: optionTwoVotes}]
         return (
             <Link to={`/questions/${id}`} className='pole-summary'>
                 <img
@@ -30,10 +30,10 @@ class PoleSummary extends Component {
                         <div>{formatDate(timestamp)}</div>
                     </div>
                     {options.map(option => {
-                        return  <div className={wasOptionVotedByUser(question,authedUser, option) ? "pole-summary-option":""}>
-                            <span>{optionOneText}{wasAnsweredByUser && (`: ` + optionOneVotes)}</span>
+                        return  <div className={wasOptionVotedByUser(question,authedUser, option.option) ? "pole-summary-option":""}>
+                            <span>{option.text}{wasAnsweredByUser && (`: ` + option.votes)}</span>
                             {wasAnsweredByUser && (
-                                <div>%{this.optionPercentage(option)}</div>
+                                <div>%{this.optionPercentage(option.option)}</div>
                             )}
                         </div>
                     })}
